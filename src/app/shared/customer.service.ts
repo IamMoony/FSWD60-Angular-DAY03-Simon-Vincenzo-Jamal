@@ -9,7 +9,7 @@ export class CustomerService {
 
   constructor(private firebase: AngularFireDatabase) { }
       customerList: AngularFireList<any>;
-  form = new FormGroup({
+      form = new FormGroup({
      $key: new FormControl(null),
      fullName: new FormControl('', Validators.required),//We add Validators option and we used required so the user must fill the input 
      email: new FormControl('', Validators.email),// to check if the value inside the input is an email
@@ -31,5 +31,29 @@ export class CustomerService {
                          location:customer.location,
                          hobbys:customer.hobbys
                   });
-         }
-}
+               }
+
+       populateForm(customer){
+    this.form.setValue(customer);
+  }
+
+        updateCustomer(customer){
+            this.customerList.update(customer.$key,{
+            fullName: customer.fullName,
+            email: customer.email,
+            mobile: customer.mobile,
+            location:customer.location,
+            hobbys:customer.hobbys
+    });
+  }
+
+  deleteCustomer($key: string){
+    this.customerList.remove($key);
+  }
+
+      }
+
+
+      
+
+ 
